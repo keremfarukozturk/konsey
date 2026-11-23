@@ -67,5 +67,47 @@ class KoltukHaricYollar(unittest.TestCase):
         self.assertNotIn("değişti (mtime): " + DURUM, cikti)
 
 
+# v1.0.1: updater klasörünün kendi mtime farkı yok sayılır (karar 67 kapsamı)
+UD = ".gemini/antigravity-cli/updater"
+KLASORLU = dict(TABAN)
+KLASORLU[UD] = (100, 128, "")
+
+
+class KlasorMtime(unittest.TestCase):
+    def test_yalniz_klasor_mtime_degisince_gecer_ve_bilgi_satiri_cikar(self):
+        sonra = dict(KLASORLU)
+        sonra[UD] = (200, 128, "")
+        ok, cikti = rapor(KLASORLU, sonra)
+        self.assertTrue(ok)
+        self.assertIn(f"bilgi: klasörün kendi mtime farkı yok sayıldı: {UD}", cikti)
+
+    def test_klasore_yeni_dosya_eklenince_bozulur(self):
+        sonra = dict(KLASORLU)
+        sonra[UD] = (200, 160, "")
+        sonra[U + "yeni.bin"] = (200, 5, "")
+        self.assertFalse(rapor(KLASORLU, sonra)[0])
+        yalniz_dosya = dict(KLASORLU)
+        yalniz_dosya[U + "yeni.bin"] = (200, 5, "")       # klasör mtime'ı aynı kalsa da yeni dosya hata
+        self.assertFalse(rapor(KLASORLU, yalniz_dosya)[0])
+
+    def test_klasorde_dosya_silinince_bozulur(self):
+        sonra = {k: v for k, v in KLASORLU.items() if k != KILIT}
+        sonra[UD] = (200, 96, "")
+        self.assertFalse(rapor(KLASORLU, sonra)[0])
+
+    def test_klasordeki_baska_dosya_degisince_bozulur_klasor_mtime_olsa_da(self):
+        sonra = dict(KLASORLU)
+        sonra[UD] = (200, 128, "")
+        sonra[KILIT] = (9, 0, "")
+        ok, cikti = rapor(KLASORLU, sonra)
+        self.assertFalse(ok)
+        self.assertIn(KILIT, cikti)
+
+    def test_klasor_boyutu_degisirse_bozulur(self):
+        sonra = dict(KLASORLU)
+        sonra[UD] = (200, 160, "")
+        self.assertFalse(rapor(KLASORLU, sonra)[0])
+
+
 if __name__ == "__main__":
     unittest.main()

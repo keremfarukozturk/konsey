@@ -2629,6 +2629,12 @@ KOLTUK_HARIC_YOLLAR = frozenset({
 })
 
 
+# Karar 67 (v1.0.1 kapsam genişlemesi): updater klasörünün KENDİ mtime farkı yok sayılır (agy durum dosyasını yeniden yazınca
+# klasör mtime'ı değişir). Boyut/hash farkı, yeni ya da silinen dosya ve hariç listedeki iki dosya dışındaki dosya değişikliği
+# yine hata verir.
+KOLTUK_HARIC_KLASOR_MTIME = ".gemini/antigravity-cli/updater"
+
+
 def koltuk_karsilastir(kanca_once, kanca_sonra, ozet_once, ozet_sonra) -> dict:
     """Koltuk kontrolü karşılaştırması (saf işlev). Geçti/kaldı kararı: kanca hash'i aynı VE (HOME özeti yoksa ya da aynı).
     Dönen: {tamam, kanca_ayni, home_ayni (None: HOME bakılmadı), home_fark: {yeni, silinen, degisen: [{yol, neden}]}}."""
@@ -2643,6 +2649,12 @@ def koltuk_karsilastir(kanca_once, kanca_sonra, ozet_once, ozet_sonra) -> dict:
                     haric_bilgi.append({"yol": yol, "tur": tur})
         ozet_once = {k: v for k, v in ozet_once.items() if k not in KOLTUK_HARIC_YOLLAR}
         ozet_sonra = {k: v for k, v in (ozet_sonra or {}).items() if k not in KOLTUK_HARIC_YOLLAR}
+        kl = KOLTUK_HARIC_KLASOR_MTIME
+        if kl in ozet_once and kl in ozet_sonra and ozet_once[kl] != ozet_sonra[kl] \
+                and ozet_once[kl][1:] == ozet_sonra[kl][1:]:
+            haric_bilgi.append({"yol": kl, "tur": "klasor_mtime"})
+            ozet_sonra = dict(ozet_sonra)
+            ozet_sonra[kl] = ozet_once[kl]
         home_ayni = ozet_sonra == ozet_once
         f = A.ozet_farki(ozet_once, ozet_sonra)
         home_fark["yeni"], home_fark["silinen"] = f["yeni"], f["silinen"]
@@ -2668,7 +2680,8 @@ def koltuk_kontrolu_raporla(kanca_once, kanca_sonra, ozet_once, ozet_sonra, kayi
     except OSError as e:
         print(f"UYARI: koltuk_kontrol.json yazılamadı: {e}")
     for h in r["haric_tutulan_degisen"]:
-        print(f"    bilgi: hariç tutulan dosya değişti ({h['tur']}): {h['yol']}")
+        print(f"    bilgi: klasörün kendi mtime farkı yok sayıldı: {h['yol']}" if h["tur"] == "klasor_mtime"
+              else f"    bilgi: hariç tutulan dosya değişti ({h['tur']}): {h['yol']}")
     if r["tamam"]:
         print(f"✓ Koltuk yapılandırması araştırmacıdan etkilenmedi (koltuk kancası aynı"
               + ("; koltuk HOME'u aynı" if r["home_ayni"] else "") + ")")
