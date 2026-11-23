@@ -1,0 +1,21 @@
+{
+  "_aciklama": "Konseyin kullandığı modeller ve programlar. Yeni modele geçmek için yalnızca 'model' satırını değiştir. Oturum klasörü KONSEY_OTURUM, agy yalıtımlı HOME klasörü KONSEY_AGY_HOME ortam değişkeniyle değiştirilebilir.",
+  "calisma_klasoru": "~/konsey-oturum",
+  "kayit_klasoru": "kayitlar",
+  "cagri_zaman_asimi_sn": 600,
+  "saglayicilar": {
+    "claude": {
+      "komut": "claude",
+      "model": "opus"
+    },
+    "codex": {
+      "komut": "codex",
+      "model": "gpt-6.2-astra"
+    },
+    "gemini": {
+      "komut": "~/.local/bin/agy",
+      "model": "gemini-4-neon-high",
+      "home": "~/.konsey-agy"
+    }
+  }
+}

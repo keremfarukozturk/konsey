@@ -1,0 +1,7 @@
+{"type":"thread.started","thread_id":"00000039-0000-4000-8000-000000000039"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"Adresi açmayı deniyorum."}}
+{"type":"item.started","item":{"id":"item_1","type":"command_execution","command":"/bin/zsh -lc 'curl -fsSL --max-time 10 https://example.com'","aggregated_output":"","exit_code":null,"status":"in_progress"}}
+{"type":"item.completed","item":{"id":"item_1","type":"command_execution","command":"/bin/zsh -lc 'curl -fsSL --max-time 10 https://example.com'","aggregated_output":"curl: (6) Could not resolve host: example.com\n","exit_code":6,"status":"failed"}}
+{"type":"item.completed","item":{"id":"item_2","type":"agent_message","text":"ERISIM_YOK"}}
+{"type":"turn.completed","usage":{"input_tokens":28277,"cached_input_tokens":25088,"cache_write_input_tokens":0,"output_tokens":61,"reasoning_output_tokens":0}}

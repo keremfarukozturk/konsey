@@ -1,0 +1,9 @@
+kayitlar/
+__pycache__/
+*.pyc
+.env
+.env.*
+.DS_Store
+.claude/
+CLAUDE.md
+AGENTS.md

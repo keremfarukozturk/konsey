@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"00000028-0000-4000-8000-000000000028"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"{\"metin_surumu\":\"c6b782f97105\",\"oy\":\"KABUL\",\"gerekce\":\"Standart diyotlu boost dönüştürücü için 36.59 V hesabı doğrudur. Diyot akımının 2.44 µs içinde sıfıra inmesi kesintili iletimi doğrular. Metin, senkron doğrultucuda 24 V sonucunun ters akıma izin veren sürüşe bağlı olduğunu da açıkça belirtir.\",\"itirazlar\":[]}"}}
+{"type":"turn.completed","usage":{"input_tokens":21284,"cached_input_tokens":13696,"cache_write_input_tokens":0,"output_tokens":143,"reasoning_output_tokens":27}}

@@ -1,0 +1,7 @@
+{"type":"thread.started","thread_id":"00000035-0000-4000-8000-000000000035"}
+{"type":"item.completed","item":{"id":"item_0","type":"error","message":"Model metadata for `gpt-6.2-astra` not found. Defaulting to fallback metadata; this can degrade performance and cause issues."}}
+{"type":"turn.started"}
+{"type":"item.started","item":{"id":"item_1","type":"web_search","id":"ws_00000000000000000000000000000000000000000000000016","query":"","action":{"type":"other"}}}
+{"type":"item.completed","item":{"id":"item_1","type":"web_search","id":"ws_00000000000000000000000000000000000000000000000016","query":"https://example.com/","action":{"type":"open_page","url":"https://example.com/"}}}
+{"type":"item.completed","item":{"id":"item_2","type":"agent_message","text":"Example Domain"}}
+{"type":"turn.completed","usage":{"input_tokens":128821,"cached_input_tokens":3840,"cache_write_input_tokens":0,"output_tokens":33,"reasoning_output_tokens":27}}
